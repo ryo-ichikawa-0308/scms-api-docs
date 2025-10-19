@@ -1,4 +1,4 @@
-# scms-api-doc
+# scms-api-doc(暫定公開版)
 
 本書は、[simple-contract-management-system](https://github.com/ryo-ichikawa-0308/simple-contract-management-system)のAPI定義ルールを記載したものです。
 
