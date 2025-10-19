@@ -2,7 +2,7 @@
 
 本書は、[simple-contract-management-system](https://github.com/ryo-ichikawa-0308/simple-contract-management-system)のAPI定義ルールを記載したものです。
 
-READMEの原則に従って設計したAPI設計のサンプルを含みます。API設計サンプル(個別設計書)は、一部のみ作成しています。
+API設計マニュアル(メインコンテンツ)と、API設計のサンプルを含みます。API設計サンプル(個別設計書)は、一部のみ作成する予定です。
 
 APIはNestJSで実装することを想定しています。
 
