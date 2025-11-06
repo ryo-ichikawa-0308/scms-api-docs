@@ -12,6 +12,6 @@ APIはNestJSで実装することを想定しています。
 
 ## 設計書のファイル構成
 
-- **[api-tutorial.md](./api-tutorial.md)** API設計マニュアル。本プロジェクトのメインコンテンツです。
+- **[api-docs-tutorial.md](./api-docs-tutorial.md)** API設計マニュアル。本プロジェクトのメインコンテンツです。
 
 (C)2025 Ryo ICHIKAWA
