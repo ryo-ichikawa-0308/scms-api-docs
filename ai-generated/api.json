@@ -92,7 +92,7 @@
       "endpoint": "/contracts/{contractId}",
       "resource": "contracts",
       "action": "cancel",
-      "method": "PUT",
+      "method": "PATCH",
       "category": "契約",
       "authRequired": true,
       "note": "契約数=0に更新"
@@ -1065,7 +1065,7 @@
       "endpoint": "/contracts/{contractId}",
       "resource": "contracts",
       "action": "cancel",
-      "method": "PUT",
+      "method": "PATCH",
       "category": "契約",
       "authRequired": true,
       "description": "リクエストボディの条件に基づき、契約テーブルのレコードを更新(契約数=0)する。認証トークンにより、アクセス権限を確認する。",
