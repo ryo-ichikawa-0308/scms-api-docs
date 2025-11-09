@@ -2,7 +2,7 @@
   "basePath": "/api/v1",
   "apiList": [
     {
-      "no": "101",
+      "no": 101,
       "name": "ログイン",
       "path": "./auth_login.md",
       "endpoint": "/auth/login",
@@ -14,7 +14,7 @@
       "note": ""
     },
     {
-      "no": "102",
+      "no": 102,
       "name": "ログアウト",
       "path": "./auth_logout.md",
       "endpoint": "/auth/logout",
@@ -26,7 +26,7 @@
       "note": ""
     },
     {
-      "no": "201",
+      "no": 201,
       "name": "サービス一覧",
       "path": "./user_services_list.md",
       "endpoint": "/user-services/list",
@@ -38,7 +38,7 @@
       "note": ""
     },
     {
-      "no": "202",
+      "no": 202,
       "name": "サービス詳細",
       "path": "./user_services_detail.md",
       "endpoint": "/user-services/{serviceId}",
@@ -50,7 +50,7 @@
       "note": ""
     },
     {
-      "no": "301",
+      "no": 301,
       "name": "契約一覧",
       "path": "./contracts_list.md",
       "endpoint": "/contracts/list",
@@ -62,7 +62,7 @@
       "note": ""
     },
     {
-      "no": "302",
+      "no": 302,
       "name": "契約詳細",
       "path": "./contracts_detail.md",
       "endpoint": "/contracts/{contractId}",
@@ -74,7 +74,7 @@
       "note": ""
     },
     {
-      "no": "303",
+      "no": 401,
       "name": "サービス契約",
       "path": "./contracts_create.md",
       "endpoint": "/contracts",
@@ -83,10 +83,10 @@
       "method": "POST",
       "category": "契約",
       "authRequired": true,
-      "note": "リソース作成"
+      "note": ""
     },
     {
-      "no": "304",
+      "no": 402,
       "name": "サービス解約",
       "path": "./contracts_cancel.md",
       "endpoint": "/contracts/{contractId}",
@@ -95,382 +95,490 @@
       "method": "PATCH",
       "category": "契約",
       "authRequired": true,
-      "note": "契約数=0に更新"
+      "note": ""
     }
   ],
-  "apis": [
-    {
-      "no": "101",
-      "name": "ログイン",
-      "endpoint": "/auth/login",
-      "resource": "auth",
-      "action": "login",
-      "method": "POST",
-      "category": "認証",
-      "authRequired": false,
-      "description": "ユーザーID(メールアドレス)とパスワードを照合し、認証可否(可の場合はトークン)を返す。",
-      "request": {
-        "header": [
-          {
-            "name": "Content-Type",
-            "required": true,
-            "note": "-"
-          }
-        ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエスト)",
-          "fields": [
-            {
-              "logicalName": "メールアドレス",
-              "name": "email",
-              "type": "string",
-              "dbTable": "ユーザー",
-              "dbColumn": "メールアドレス",
-              "required": true,
-              "minLength": 6,
-              "maxLength": 255,
-              "format": "メールアドレス",
-              "min": null,
-              "max": null,
-              "note": "-",
-              "children": []
-            },
-            {
-              "logicalName": "パスワード",
-              "name": "password",
-              "type": "string",
-              "dbTable": "ユーザー",
-              "dbColumn": "パスワード",
-              "required": true,
-              "minLength": 8,
-              "maxLength": 16,
-              "format": "-",
-              "min": null,
-              "max": null,
-              "note": "ハッシュ化して照合",
-              "children": []
-            }
-          ]
-        }
-      },
-      "response": {
-        "status": 200,
-        "header": [],
-        "fields": [
-          {
-            "logicalName": "認証トークン",
-            "name": "token",
-            "type": "string",
-            "dbTable": "-",
-            "dbColumn": "-",
-            "required": true,
-            "note": "JWTトークン",
-            "children": []
-          },
-          {
-            "logicalName": "ユーザーID",
-            "name": "id",
-            "type": "string",
-            "dbTable": "ユーザー",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "ユーザー名",
-            "name": "name",
-            "type": "string",
-            "dbTable": "ユーザー",
-            "dbColumn": "ユーザー名",
-            "required": true,
-            "note": "-",
-            "children": []
-          }
-        ]
-      },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "入力内容に誤りがあります",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "バリデーションエラー"
+  "apis": {
+    "auth": [
+      {
+        "no": 101,
+        "summary": {
+          "name": "ログイン",
+          "endpoint": "/auth/login",
+          "resource": "auth",
+          "action": "login",
+          "method": "POST",
+          "category": "認証",
+          "authRequired": false,
+          "dataType": "JSON"
         },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "認証情報が不正です",
-          "occurrenceCondition": "メールアドレス、またはパスワードが不正な場合"
-        }
-      ]
-    },
-    {
-      "no": "102",
-      "name": "ログアウト",
-      "endpoint": "/auth/logout",
-      "resource": "auth",
-      "action": "logout",
-      "method": "POST",
-      "category": "認証",
-      "authRequired": true,
-      "description": "リクエストヘッダの認証トークン(JWT)を無効化し、セッションを終了させる。",
-      "request": {
-        "header": [
-          {
-            "name": "Authorization",
-            "required": true,
-            "note": "-"
-          },
+        "requestHeader": [
           {
             "name": "Content-Type",
             "required": true,
-            "note": "-"
+            "sample": "application/json",
+            "note": ""
           }
         ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエスト)",
-          "fields": []
-        }
-      },
-      "response": {
-        "status": 204,
-        "header": [],
-        "fields": []
-      },
-      "errors": [
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "認証が必要なAPIでトークンが無効または未送信の場合"
-        }
-      ]
-    },
-    {
-      "no": "201",
-      "name": "サービス一覧",
-      "endpoint": "/user-services/list",
-      "resource": "user-services",
-      "action": "list",
-      "method": "POST",
-      "category": "サービス",
-      "authRequired": true,
-      "description": "リクエストボディの条件に基づき、ユーザー提供サービス情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
           {
-            "name": "Authorization",
+            "description": "メールアドレス",
+            "name": "email",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "メールアドレス",
             "required": true,
-            "note": "認証トークン"
+            "minLength": 6,
+            "maxLength": 255,
+            "format": "メールアドレス",
+            "min": null,
+            "max": null,
+            "note": ""
           },
           {
-            "name": "Content-Type",
+            "description": "パスワード",
+            "name": "password",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "パスワード",
             "required": true,
-            "note": "-"
+            "minLength": 8,
+            "maxLength": 16,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "ハッシュ化して照合"
           }
         ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": [
+        "description": "ユーザーID(メールアドレス)とパスワードを照合し、認証可否(可の場合はトークン)を返す。",
+        "response": {
+          "status": 200,
+          "body": [
             {
-              "logicalName": "サービス名",
-              "name": "serviceName",
+              "description": "認証トークン",
+              "name": "token",
               "type": "string",
-              "dbTable": "サービス",
-              "dbColumn": "サービス名",
+              "dbTable": "",
+              "dbColumn": "",
               "required": false,
               "minLength": null,
-              "maxLength": 100,
-              "format": "-",
+              "maxLength": null,
+              "format": "",
               "min": null,
               "max": null,
-              "note": "サービス名による部分一致検索",
-              "children": []
+              "note": "JWTトークン"
             },
             {
-              "logicalName": "オフセット",
-              "name": "offset",
-              "type": "number",
-              "dbTable": "-",
-              "dbColumn": "-",
-              "required": true,
+              "description": "ユーザーID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "ユーザー",
+              "dbColumn": "ID",
+              "required": false,
               "minLength": null,
               "maxLength": null,
-              "format": "-",
-              "min": 0,
+              "format": "",
+              "min": null,
               "max": null,
-              "note": "取得開始位置",
-              "children": []
+              "note": ""
             },
             {
-              "logicalName": "リミット",
-              "name": "limit",
-              "type": "number",
-              "dbTable": "-",
-              "dbColumn": "-",
-              "required": true,
+              "description": "ユーザー名",
+              "name": "name",
+              "type": "string",
+              "dbTable": "ユーザー",
+              "dbColumn": "ユーザー名",
+              "required": false,
               "minLength": null,
               "maxLength": null,
-              "format": "-",
-              "min": 1,
-              "max": 100,
-              "note": "取得件数",
-              "children": []
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
             }
           ]
-        }
-      },
-      "response": {
-        "status": 200,
-        "header": [],
-        "fields": [
+        },
+        "errors": [
           {
-            "logicalName": "総件数",
-            "name": "totalCount",
-            "type": "number",
-            "dbTable": "-",
-            "dbColumn": "-",
-            "required": true,
-            "note": "検索条件に一致する全件数",
-            "children": []
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "メールアドレスとパスワードは必須です",
+            "description": "バリデーションエラー"
           },
           {
-            "logicalName": "サービスリスト",
-            "name": "userServices",
-            "type": "array",
-            "dbTable": "-",
-            "dbColumn": "-",
-            "required": true,
-            "note": "取得件数に応じたサービス情報配列",
-            "children": [
-              {
-                "logicalName": "サービス情報",
-                "name": "userServicesItem",
-                "type": "object",
-                "dbTable": "-",
-                "dbColumn": "-",
-                "required": true,
-                "note": "",
-                "children": [
-                  {
-                    "logicalName": "ID",
-                    "name": "id",
-                    "type": "string",
-                    "dbTable": "ユーザー提供サービス",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "ユーザーID",
-                    "name": "usersId",
-                    "type": "string",
-                    "dbTable": "ユーザー",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "サービスID",
-                    "name": "servicesId",
-                    "type": "string",
-                    "dbTable": "サービス",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "サービス名",
-                    "name": "name",
-                    "type": "string",
-                    "dbTable": "サービス",
-                    "dbColumn": "サービス名",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "概要",
-                    "name": "description",
-                    "type": "string",
-                    "dbTable": "サービス",
-                    "dbColumn": "概要",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "単価",
-                    "name": "price",
-                    "type": "number",
-                    "dbTable": "サービス",
-                    "dbColumn": "単価",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "単位",
-                    "name": "unit",
-                    "type": "string",
-                    "dbTable": "サービス",
-                    "dbColumn": "単位",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  }
-                ]
-              }
-            ]
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証に失敗(ユーザー未登録も含む)"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
           }
         ]
       },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "入力内容に誤りがあります",
-          "errorMessageDetail": "取得件数、オフセットは必須です",
-          "occurrenceCondition": "バリデーションエラー"
+      {
+        "no": 102,
+        "summary": {
+          "name": "ログアウト",
+          "endpoint": "/auth/logout",
+          "resource": "auth",
+          "action": "logout",
+          "method": "POST",
+          "category": "認証",
+          "authRequired": true,
+          "dataType": "JSON"
         },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "トークンが無効、未設定"
-        }
-      ]
-    },
-    {
-      "no": "202",
-      "name": "サービス詳細",
-      "endpoint": "/user-services/{serviceId}",
-      "resource": "user-services",
-      "action": "detail",
-      "method": "GET",
-      "category": "サービス",
-      "authRequired": true,
-      "description": "パスパラメーターで指定されたサービスIDに基づき、該当サービスの詳細情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "requestHeader": [
           {
             "name": "Authorization",
             "required": true,
+            "sample": "Bearer xxx...",
+            "note": ""
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [],
+        "description": "リクエストヘッダの認証トークン(JWT)を無効化し、セッションを終了させる。",
+        "response": {
+          "status": 204,
+          "body": []
+        },
+        "errors": [
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      }
+    ],
+    "user-services": [
+      {
+        "no": 201,
+        "summary": {
+          "name": "サービス一覧",
+          "endpoint": "/user-services/list",
+          "resource": "user-services",
+          "action": "list",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "サービス名",
+            "name": "serviceName",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "サービス名",
+            "required": false,
+            "minLength": null,
+            "maxLength": 100,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "部分一致検索"
+          },
+          {
+            "description": "取得件数",
+            "name": "limit",
+            "type": "number",
+            "dbTable": "",
+            "dbColumn": "",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 1,
+            "max": 100,
+            "note": ""
+          },
+          {
+            "description": "オフセット",
+            "name": "offset",
+            "type": "number",
+            "dbTable": "",
+            "dbColumn": "",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "description": "リクエストボディの検索条件に基づき、ユーザーが利用可能なサービスの一覧を取得し返却する。",
+        "response": {
+          "status": 200,
+          "body": [
+            {
+              "description": "総件数",
+              "name": "totalCount",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "検索条件に一致する全件数"
+            },
+            {
+              "description": "総ページ数",
+              "name": "totalPages",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "totalCountとlimitから計算される総ページ数"
+            },
+            {
+              "description": "現在ページ",
+              "name": "currentPage",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "offsetとlimitから計算される現在のページ番号"
+            },
+            {
+              "description": "取得件数",
+              "name": "limit",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": 1,
+              "max": 100,
+              "note": "リクエストパラメータから踏襲"
+            },
+            {
+              "description": "オフセット",
+              "name": "offset",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": 0,
+              "max": null,
+              "note": "リクエストパラメータから踏襲"
+            },
+            {
+              "description": "サービスリスト",
+              "name": "userServices",
+              "type": "array",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "取得件数に応じたサービス情報配列",
+              "children": [
+                {
+                  "description": "ID",
+                  "name": "id",
+                  "type": "string",
+                  "dbTable": "ユーザー提供サービス",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "ユーザーID",
+                  "name": "usersId",
+                  "type": "string",
+                  "dbTable": "ユーザー",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "サービスID",
+                  "name": "servicesId",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "サービス名",
+                  "name": "name",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "サービス名",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "概要",
+                  "name": "description",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "概要",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "単価",
+                  "name": "price",
+                  "type": "number",
+                  "dbTable": "サービス",
+                  "dbColumn": "単価",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "単位",
+                  "name": "unit",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "単位",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                }
+              ]
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "取得件数、オフセットは必須です",
+            "description": "バリデーションエラー"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "トークンが無効、未設定"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 202,
+        "summary": {
+          "name": "サービス詳細",
+          "endpoint": "/user-services/{serviceId}",
+          "resource": "user-services",
+          "action": "detail",
+          "method": "GET",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
             "note": "認証トークン"
           }
         ],
-        "pathParam": [
+        "pathParameters": [
           {
-            "logicalName": "ユーザー提供サービスID",
-            "name": "ID",
+            "description": "ユーザー提供サービスID",
+            "name": "id",
             "type": "string",
             "dbTable": "ユーザー提供サービス",
             "dbColumn": "ID",
@@ -480,662 +588,790 @@
             "format": "UUID",
             "min": null,
             "max": null,
-            "note": "-",
-            "children": []
+            "note": ""
           }
         ],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": []
-        }
-      },
-      "response": {
-        "status": 200,
-        "header": [],
-        "fields": [
+        "urlParameters": [],
+        "requestBody": [],
+        "description": "パスパラメーターで指定されたサービスIDに基づき、該当サービスの詳細情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 200,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "ユーザーID",
+              "name": "usersId",
+              "type": "string",
+              "dbTable": "ユーザー",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "サービスID",
+              "name": "servicesId",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "サービス名",
+              "name": "name",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "サービス名",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "概要",
+              "name": "description",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "概要",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "単価",
+              "name": "price",
+              "type": "number",
+              "dbTable": "サービス",
+              "dbColumn": "単価",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "在庫数",
+              "name": "stock",
+              "type": "number",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "在庫",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "単位",
+              "name": "unit",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "単位",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            }
+          ]
+        },
+        "errors": [
           {
-            "logicalName": "ID",
-            "name": "id",
-            "type": "string",
-            "dbTable": "ユーザー提供サービス",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
           },
           {
-            "logicalName": "ユーザーID",
-            "name": "usersId",
-            "type": "string",
-            "dbTable": "ユーザー",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "トークンが無効、未設定"
           },
           {
-            "logicalName": "サービスID",
-            "name": "servicesId",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
+            "status": 404,
+            "message": "該当データが見つかりません",
+            "detail": "",
+            "description": "指定したサービスIDが存在しない場合"
           },
           {
-            "logicalName": "サービス名",
-            "name": "name",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "サービス名",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "概要",
-            "name": "description",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "概要",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "単価",
-            "name": "price",
-            "type": "number",
-            "dbTable": "サービス",
-            "dbColumn": "単価",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "在庫数",
-            "name": "stock",
-            "type": "number",
-            "dbTable": "ユーザー提供サービス",
-            "dbColumn": "在庫",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "単位",
-            "name": "unit",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "単位",
-            "required": true,
-            "note": "-",
-            "children": []
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
           }
         ]
-      },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "パラメーターが不正です",
-          "errorMessageDetail": "サービスIDの形式が不正です",
-          "occurrenceCondition": "パスパラメーター(サービスID)の形式が不正な場合"
+      }
+    ],
+    "contracts": [
+      {
+        "no": 301,
+        "summary": {
+          "name": "契約一覧",
+          "endpoint": "/contracts/list",
+          "resource": "contracts",
+          "action": "list",
+          "method": "POST",
+          "category": "契約",
+          "authRequired": true,
+          "dataType": "JSON"
         },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "認証が必要なAPIでトークンが無効または未送信の場合"
-        },
-        {
-          "httpStatus": 404,
-          "errorMessage": "リソースが見つかりませんでした",
-          "errorMessageDetail": "対象のサービスが見つかりません",
-          "occurrenceCondition": "指定されたサービスIDが存在しない場合"
-        }
-      ]
-    },
-    {
-      "no": "301",
-      "name": "契約一覧",
-      "endpoint": "/contracts/list",
-      "resource": "contracts",
-      "action": "list",
-      "method": "POST",
-      "category": "契約",
-      "authRequired": true,
-      "description": "リクエストボディの条件に基づき、契約情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "requestHeader": [
           {
             "name": "Authorization",
             "required": true,
+            "sample": "Bearer eyJ...",
             "note": "認証トークン"
           },
           {
             "name": "Content-Type",
             "required": true,
-            "note": "-"
+            "sample": "application/json",
+            "note": ""
           }
         ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": [
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "ユーザーID",
+            "name": "userId",
+            "type": "string",
+            "dbTable": "契約",
+            "dbColumn": "ユーザーID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "ログイン中のユーザーID"
+          },
+          {
+            "description": "サービス名",
+            "name": "serviceName",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "サービス名",
+            "required": false,
+            "minLength": null,
+            "maxLength": 100,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "部分一致検索"
+          },
+          {
+            "description": "取得件数",
+            "name": "limit",
+            "type": "number",
+            "dbTable": "",
+            "dbColumn": "",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 1,
+            "max": 100,
+            "note": ""
+          },
+          {
+            "description": "オフセット",
+            "name": "offset",
+            "type": "number",
+            "dbTable": "",
+            "dbColumn": "",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "description": "リクエストボディの検索条件に基づき、ユーザーの契約の一覧を取得し返却する。",
+        "response": {
+          "status": 200,
+          "body": [
             {
-              "logicalName": "ユーザーID",
-              "name": "userId",
+              "description": "総件数",
+              "name": "totalCount",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "検索条件に一致する全件数"
+            },
+            {
+              "description": "総ページ数",
+              "name": "totalPages",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "totalCountとlimitから計算される総ページ数"
+            },
+            {
+              "description": "現在ページ",
+              "name": "currentPage",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "offsetとlimitから計算される現在のページ番号"
+            },
+            {
+              "description": "取得件数",
+              "name": "limit",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": 1,
+              "max": 100,
+              "note": "リクエストパラメータから踏襲"
+            },
+            {
+              "description": "オフセット",
+              "name": "offset",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": 0,
+              "max": null,
+              "note": "リクエストパラメータから踏襲"
+            },
+            {
+              "description": "契約リスト",
+              "name": "contracts",
+              "type": "array",
+              "dbTable": "",
+              "dbColumn": "",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "取得件数に応じた契約情報配列",
+              "children": [
+                {
+                  "description": "ID",
+                  "name": "id",
+                  "type": "string",
+                  "dbTable": "契約",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "ユーザーID",
+                  "name": "usersId",
+                  "type": "string",
+                  "dbTable": "ユーザー",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "ユーザー提供サービスID",
+                  "name": "userServicesId",
+                  "type": "string",
+                  "dbTable": "ユーザー提供サービス",
+                  "dbColumn": "ID",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "サービス名",
+                  "name": "name",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "サービス名",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "単価",
+                  "name": "price",
+                  "type": "number",
+                  "dbTable": "サービス",
+                  "dbColumn": "単価",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                },
+                {
+                  "description": "契約数",
+                  "name": "quantity",
+                  "type": "number",
+                  "dbTable": "契約",
+                  "dbColumn": "契約数",
+                  "required": false,
+                  "minLength": null,
+                  "maxLength": null,
+                  "format": "",
+                  "min": null,
+                  "max": null,
+                  "note": ""
+                }
+              ]
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "取得件数、オフセットは必須です",
+            "description": "バリデーションエラー"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "トークンが無効、未設定"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 302,
+        "summary": {
+          "name": "契約詳細",
+          "endpoint": "/contracts/{contractId}",
+          "resource": "contracts",
+          "action": "detail",
+          "method": "GET",
+          "category": "契約",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          }
+        ],
+        "pathParameters": [
+          {
+            "description": "ID",
+            "name": "id",
+            "type": "string",
+            "dbTable": "契約",
+            "dbColumn": "ID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "urlParameters": [],
+        "requestBody": [],
+        "description": "パスパラメーターで指定された契約IDに基づき、該当契約の詳細情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 200,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
               "type": "string",
               "dbTable": "契約",
-              "dbColumn": "ユーザーID",
-              "required": true,
-              "minLength": 36,
-              "maxLength": 36,
-              "format": "-",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
               "min": null,
               "max": null,
-              "note": "ログイン中のユーザーID",
-              "children": []
+              "note": ""
             },
             {
-              "logicalName": "サービス名",
-              "name": "serviceName",
+              "description": "ユーザーID",
+              "name": "usersId",
+              "type": "string",
+              "dbTable": "ユーザー",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "ユーザー提供サービスID",
+              "name": "userServicesId",
+              "type": "string",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            },
+            {
+              "description": "サービス名",
+              "name": "name",
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "サービス名",
               "required": false,
               "minLength": null,
-              "maxLength": 100,
-              "format": "-",
+              "maxLength": null,
+              "format": "",
               "min": null,
               "max": null,
-              "note": "サービス名による部分一致検索",
-              "children": []
+              "note": ""
             },
             {
-              "logicalName": "オフセット",
-              "name": "offset",
+              "description": "単価",
+              "name": "price",
               "type": "number",
-              "dbTable": "-",
-              "dbColumn": "-",
-              "required": true,
+              "dbTable": "サービス",
+              "dbColumn": "単価",
+              "required": false,
               "minLength": null,
               "maxLength": null,
-              "format": "-",
-              "min": 0,
+              "format": "",
+              "min": null,
               "max": null,
-              "note": "取得開始位置",
-              "children": []
+              "note": ""
             },
             {
-              "logicalName": "リミット",
-              "name": "limit",
+              "description": "契約数",
+              "name": "quantity",
               "type": "number",
-              "dbTable": "-",
-              "dbColumn": "-",
-              "required": true,
+              "dbTable": "契約",
+              "dbColumn": "契約数",
+              "required": false,
               "minLength": null,
               "maxLength": null,
-              "format": "-",
-              "min": 1,
-              "max": 100,
-              "note": "取得件数",
-              "children": []
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "解約画面で取得"
+            },
+            {
+              "description": "在庫数",
+              "name": "stock",
+              "type": "number",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "在庫数",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": "契約画面で取得"
             }
           ]
-        }
-      },
-      "response": {
-        "status": 200,
-        "header": [],
-        "fields": [
+        },
+        "errors": [
           {
-            "logicalName": "総件数",
-            "name": "totalCount",
-            "type": "number",
-            "dbTable": "-",
-            "dbColumn": "-",
-            "required": true,
-            "note": "検索条件に一致する全件数",
-            "children": []
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "契約IDの形式が不正です",
+            "description": "パスパラメーター(契約ID)の形式が不正な場合"
           },
           {
-            "logicalName": "契約リスト",
-            "name": "contracts",
-            "type": "array",
-            "dbTable": "-",
-            "dbColumn": "-",
-            "required": true,
-            "note": "取得件数に応じた契約情報配列",
-            "children": [
-              {
-                "logicalName": "契約情報",
-                "name": "contractsItem",
-                "type": "object",
-                "dbTable": "-",
-                "dbColumn": "-",
-                "required": true,
-                "note": "",
-                "children": [
-                  {
-                    "logicalName": "ID",
-                    "name": "id",
-                    "type": "string",
-                    "dbTable": "契約",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "ユーザーID",
-                    "name": "usersId",
-                    "type": "string",
-                    "dbTable": "ユーザー",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "ユーザー提供サービスID",
-                    "name": "userServicesId",
-                    "type": "string",
-                    "dbTable": "ユーザー提供サービス",
-                    "dbColumn": "ID",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "サービス名",
-                    "name": "name",
-                    "type": "string",
-                    "dbTable": "サービス",
-                    "dbColumn": "サービス名",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "単価",
-                    "name": "price",
-                    "type": "number",
-                    "dbTable": "サービス",
-                    "dbColumn": "単価",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  },
-                  {
-                    "logicalName": "契約数",
-                    "name": "quantity",
-                    "type": "number",
-                    "dbTable": "契約",
-                    "dbColumn": "契約数",
-                    "required": true,
-                    "note": "-",
-                    "children": []
-                  }
-                ]
-              }
-            ]
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "トークンが無効、未設定"
+          },
+          {
+            "status": 404,
+            "message": "該当データが見つかりません",
+            "detail": "",
+            "description": "指定した契約IDが存在しない場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
           }
         ]
       },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "入力内容に誤りがあります",
-          "errorMessageDetail": "取得件数、オフセットは必須です",
-          "occurrenceCondition": "バリデーションエラー"
+      {
+        "no": 401,
+        "summary": {
+          "name": "サービス契約",
+          "endpoint": "/contracts",
+          "resource": "contracts",
+          "action": "create",
+          "method": "POST",
+          "category": "契約",
+          "authRequired": true,
+          "dataType": "JSON"
         },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "トークンが無効、未設定"
-        },
-        {
-          "httpStatus": 403,
-          "errorMessage": "リソースへのアクセス権限がありません",
-          "errorMessageDetail": "他ユーザーの契約は閲覧できません",
-          "occurrenceCondition": "リクエストしたユーザーIDと認証トークン内のユーザーIDが一致しない場合"
-        }
-      ]
-    },
-    {
-      "no": "302",
-      "name": "契約詳細",
-      "endpoint": "/contracts/{contractId}",
-      "resource": "contracts",
-      "action": "detail",
-      "method": "GET",
-      "category": "契約",
-      "authRequired": true,
-      "description": "パスパラメーターで指定された契約IDに基づき、該当契約の詳細情報を取得し返却する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "requestHeader": [
           {
             "name": "Authorization",
             "required": true,
+            "sample": "Bearer eyJ...",
             "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
           }
         ],
-        "pathParam": [
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
           {
-            "logicalName": "ID",
-            "name": "id",
+            "description": "ユーザーID",
+            "name": "userId",
             "type": "string",
             "dbTable": "契約",
-            "dbColumn": "ID",
+            "dbColumn": "ユーザーID",
             "required": true,
             "minLength": 36,
             "maxLength": 36,
             "format": "UUID",
             "min": null,
             "max": null,
-            "note": "-",
-            "children": []
-          }
-        ],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": []
-        }
-      },
-      "response": {
-        "status": 200,
-        "header": [],
-        "fields": [
+            "note": ""
+          },
           {
-            "logicalName": "ID",
-            "name": "id",
+            "description": "ユーザー提供サービスID",
+            "name": "userServiceId",
             "type": "string",
             "dbTable": "契約",
-            "dbColumn": "ID",
+            "dbColumn": "ユーザー提供サービスID",
             "required": true,
-            "note": "-",
-            "children": []
+            "minLength": 36,
+            "maxLength": 63,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
           },
           {
-            "logicalName": "ユーザーID",
-            "name": "usersId",
-            "type": "string",
-            "dbTable": "ユーザー",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "ユーザー提供サービスID",
-            "name": "userServicesId",
-            "type": "string",
-            "dbTable": "ユーザー提供サービス",
-            "dbColumn": "ID",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "サービス名",
-            "name": "name",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "サービス名",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "単価",
-            "name": "price",
-            "type": "number",
-            "dbTable": "サービス",
-            "dbColumn": "単価",
-            "required": true,
-            "note": "-",
-            "children": []
-          },
-          {
-            "logicalName": "契約数",
+            "description": "契約数",
             "name": "quantity",
             "type": "number",
             "dbTable": "契約",
             "dbColumn": "契約数",
             "required": true,
-            "note": "解約画面で取得",
-            "children": []
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 1,
+            "max": 99,
+            "note": ""
+          }
+        ],
+        "description": "リクエストボディの条件に基づき、契約テーブルのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 204,
+          "body": []
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "契約数には1以上の整数を指定してください",
+            "description": "バリデーションエラー"
           },
           {
-            "logicalName": "在庫数",
-            "name": "stock",
-            "type": "number",
-            "dbTable": "ユーザー提供サービス",
-            "dbColumn": "在庫数",
-            "required": true,
-            "note": "契約画面で取得",
-            "children": []
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 404,
+            "message": "対象サービスが見つかりません",
+            "detail": "",
+            "description": "指定したユーザー提供サービスIDが存在しない場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
           }
         ]
       },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "パラメーターが不正です",
-          "errorMessageDetail": "契約IDの形式が不正です",
-          "occurrenceCondition": "パスパラメーター(契約ID)の形式が不正な場合"
+      {
+        "no": 402,
+        "summary": {
+          "name": "サービス解約",
+          "endpoint": "/contracts/{contractId}",
+          "resource": "contracts",
+          "action": "cancel",
+          "method": "PATCH",
+          "category": "契約",
+          "authRequired": true,
+          "dataType": "JSON"
         },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "認証が必要なAPIでトークンが無効または未送信の場合"
-        },
-        {
-          "httpStatus": 403,
-          "errorMessage": "リソースへのアクセス権限がありません",
-          "errorMessageDetail": "他ユーザーの契約は閲覧できません",
-          "occurrenceCondition": "対象契約のユーザーIDと認証トークン内のユーザーIDが一致しない場合"
-        },
-        {
-          "httpStatus": 404,
-          "errorMessage": "リソースが見つかりませんでした",
-          "errorMessageDetail": "対象の契約が見つかりません",
-          "occurrenceCondition": "指定された契約IDが存在しない場合"
-        }
-      ]
-    },
-    {
-      "no": "303",
-      "name": "サービス契約",
-      "endpoint": "/contracts",
-      "resource": "contracts",
-      "action": "create",
-      "method": "POST",
-      "category": "契約",
-      "authRequired": true,
-      "description": "リクエストボディの条件に基づき、契約テーブルのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "requestHeader": [
           {
             "name": "Authorization",
             "required": true,
+            "sample": "Bearer eyJ...",
             "note": "認証トークン"
           },
           {
             "name": "Content-Type",
             "required": true,
-            "note": "-"
+            "sample": "application/json",
+            "note": ""
           }
         ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": [
-            {
-              "logicalName": "ユーザーID",
-              "name": "userId",
-              "type": "string",
-              "dbTable": "契約",
-              "dbColumn": "ユーザーID",
-              "required": true,
-              "minLength": 36,
-              "maxLength": 36,
-              "format": "UUID",
-              "min": null,
-              "max": null,
-              "note": "-",
-              "children": []
-            },
-            {
-              "logicalName": "ユーザー提供サービスID",
-              "name": "userServiceId",
-              "type": "string",
-              "dbTable": "契約",
-              "dbColumn": "ユーザー提供サービスID",
-              "required": true,
-              "minLength": 36,
-              "maxLength": 63,
-              "format": "UUID",
-              "min": null,
-              "max": null,
-              "note": "-",
-              "children": []
-            },
-            {
-              "logicalName": "契約数",
-              "name": "quantity",
-              "type": "number",
-              "dbTable": "契約",
-              "dbColumn": "契約数",
-              "required": true,
-              "minLength": null,
-              "maxLength": null,
-              "format": "-",
-              "min": 1,
-              "max": 99,
-              "note": "-",
-              "children": []
-            }
-          ]
-        }
-      },
-      "response": {
-        "status": 204,
-        "header": [],
-        "fields": []
-      },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "入力内容に誤りがあります",
-          "errorMessageDetail": "契約数には1以上の整数を指定してください",
-          "occurrenceCondition": "バリデーションエラー"
-        },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "認証が必要なAPIでトークンが無効または未送信の場合"
-        },
-        {
-          "httpStatus": 403,
-          "errorMessage": "リソースへのアクセス権限がありません",
-          "errorMessageDetail": "他ユーザーとして契約を登録することはできません",
-          "occurrenceCondition": "リクエストしたユーザーIDと認証トークン内のユーザーIDが一致しない場合"
-        },
-        {
-          "httpStatus": 404,
-          "errorMessage": "リソースが見つかりませんでした",
-          "errorMessageDetail": "指定されたサービスIDが存在しない、または在庫切れです",
-          "occurrenceCondition": "ユーザー提供サービスIDが存在しない、または在庫数 < 契約数となる場合"
-        }
-      ]
-    },
-    {
-      "no": "304",
-      "name": "サービス解約",
-      "endpoint": "/contracts/{contractId}",
-      "resource": "contracts",
-      "action": "cancel",
-      "method": "PATCH",
-      "category": "契約",
-      "authRequired": true,
-      "description": "リクエストボディの条件に基づき、契約テーブルのレコードを更新(契約数=0)する。認証トークンにより、アクセス権限を確認する。",
-      "request": {
-        "header": [
+        "pathParameters": [
           {
-            "name": "Authorization",
+            "description": "契約ID",
+            "name": "id",
+            "type": "string",
+            "dbTable": "契約",
+            "dbColumn": "ID",
             "required": true,
-            "note": "認証トークン"
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": "解約する契約のID"
+          }
+        ],
+        "urlParameters": [],
+        "requestBody": [],
+        "description": "パスパラメータの条件に基づき、契約テーブルのレコードを更新(契約数=0)する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 204,
+          "body": []
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "-",
+            "description": "バリデーションエラー"
           },
           {
-            "name": "Content-Type",
-            "required": true,
-            "note": "-"
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "-",
+            "description": "トークンが無効、未設定"
+          },
+          {
+            "status": 404,
+            "message": "対象契約が見つかりません",
+            "detail": "-",
+            "description": "指定した契約IDが存在しない、または解約済みの場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
           }
-        ],
-        "pathParam": [],
-        "queryParam": [],
-        "body": {
-          "logicalName": "ルートオブジェクト(リクエストボディ)",
-          "fields": [
-            {
-              "logicalName": "契約ID",
-              "name": "id",
-              "type": "string",
-              "dbTable": "契約",
-              "dbColumn": "ID",
-              "required": true,
-              "minLength": 36,
-              "maxLength": 36,
-              "format": "UUID",
-              "min": null,
-              "max": null,
-              "note": "解約する契約のID",
-              "children": []
-            }
-          ]
-        }
-      },
-      "response": {
-        "status": 204,
-        "header": [],
-        "fields": []
-      },
-      "errors": [
-        {
-          "httpStatus": 400,
-          "errorMessage": "入力内容に誤りがあります",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "バリデーションエラー"
-        },
-        {
-          "httpStatus": 401,
-          "errorMessage": "認証情報が無効です",
-          "errorMessageDetail": "-",
-          "occurrenceCondition": "認証が必要なAPIでトークンが無効または未送信の場合"
-        },
-        {
-          "httpStatus": 403,
-          "errorMessage": "リソースへのアクセス権限がありません",
-          "errorMessageDetail": "他ユーザーの契約は解約できません",
-          "occurrenceCondition": "対象契約のユーザーIDと認証トークン内のユーザーIDが一致しない場合"
-        },
-        {
-          "httpStatus": 404,
-          "errorMessage": "リソースが見つかりませんでした",
-          "errorMessageDetail": "対象の契約が見つかりません",
-          "occurrenceCondition": "指定された契約IDが存在しない場合"
-        }
-      ]
-    }
-  ]
+        ]
+      }
+    ]
+  }
 }
