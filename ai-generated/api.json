@@ -96,6 +96,18 @@
       "category": "契約",
       "authRequired": true,
       "note": ""
+    },
+    {
+      "no": "501",
+      "name": "ユーザー登録",
+      "path": "./users_create.md",
+      "endpoint": "/users/",
+      "resource": "users",
+      "action": "create",
+      "method": "POST",
+      "category": "ユーザー管理",
+      "authRequired": false,
+      "note": ""
     }
   ],
   "apis": {
@@ -1363,6 +1375,100 @@
             "message": "対象契約が見つかりません",
             "detail": "-",
             "description": "指定した契約IDが存在しない、または解約済みの場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      }
+    ],
+    "users": [
+      {
+        "no": "501",
+        "summary": {
+          "name": "ユーザー作成",
+          "endpoint": "/users/",
+          "resource": "users",
+          "action": "create",
+          "method": "POST",
+          "category": "ユーザー管理",
+          "authRequired": false,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "ユーザー名",
+            "name": "name",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "ユーザー名",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "メールアドレス",
+            "name": "email",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "メールアドレス",
+            "required": true,
+            "minLength": 6,
+            "maxLength": 256,
+            "format": "メールアドレス",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "パスワード",
+            "name": "password",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "パスワード",
+            "required": true,
+            "minLength": 8,
+            "maxLength": 16,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "description": "ユーザー情報を登録する。",
+        "response": {
+          "status": 204,
+          "body": []
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "メールアドレスを入力してください",
+            "description": "バリデーションエラー"
+          },
+          {
+            "status": 409,
+            "message": "このユーザーは登録できません",
+            "detail": "",
+            "description": "メールアドレスが被った場合"
           },
           {
             "status": 500,
