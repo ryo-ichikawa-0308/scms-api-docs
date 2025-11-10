@@ -1255,7 +1255,7 @@
             "dbColumn": "ユーザー提供サービスID",
             "required": true,
             "minLength": 36,
-            "maxLength": 63,
+            "maxLength": 36,
             "format": "UUID",
             "min": null,
             "max": null,
@@ -1278,8 +1278,23 @@
         ],
         "description": "リクエストボディの条件に基づき、契約テーブルのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
         "response": {
-          "status": 204,
-          "body": []
+          "status": 201,
+          "body": [
+            {
+              "description": "契約ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "契約",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            }
+          ]
         },
         "errors": [
           {
@@ -1454,8 +1469,23 @@
         ],
         "description": "ユーザー情報を登録する。",
         "response": {
-          "status": 204,
-          "body": []
+          "status": 201,
+          "body": [
+            {
+              "description": "ユーザーID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "ユーザー",
+              "dbColumn": "ID",
+              "required": false,
+              "minLength": null,
+              "maxLength": null,
+              "format": "",
+              "min": null,
+              "max": null,
+              "note": ""
+            }
+          ]
         },
         "errors": [
           {
