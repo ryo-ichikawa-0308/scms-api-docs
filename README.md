@@ -28,6 +28,7 @@ APIはNestJS(TypeScript)で実装することを前提とし、[API設計マニ�
 - **[contracts_detail.md](./api/contracts_detail.md)** 契約詳細API。
 - **[contracts_create.md](./api/contracts_create.md)** サービス契約API。
 - **[contracts_cancel.md](./api/contracts_cancel.md)** サービス解約API。
+- **[users_create.md](./api/users_create.md)** ユーザー登録API。
 
 ---
 
