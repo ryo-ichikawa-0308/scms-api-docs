@@ -10,3 +10,4 @@
 | 302 | [契約詳細](./contracts_detail.md)         | `/api/v1/contracts/{contractId}`    | `contracts`     | `detail`   | `GET`    | 契約             | 要       |      |
 | 401 | [サービス契約](./contracts_create.md)     | `/api/v1/contracts/`                | `contracts`     | `create`   | `POST`   | 契約             | 要       |      |
 | 402 | [サービス解約](./contracts_cancel.md)     | `/api/v1/contracts/{contractId}`    | `contracts`     | `cancel`   | `PATCH`  | 契約             | 要       |      |
+| 501 | [ユーザー登録](./users_create.md)         | `/api/v1/users/`                    | `users`         | `create`   | `POST`   | ユーザー管理     | 不要     |      |
