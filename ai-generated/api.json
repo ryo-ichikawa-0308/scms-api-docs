@@ -308,6 +308,11 @@
         },
         "requestHeader": [
           {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer xxx...",
+            "note": "リフレッシュトークン"
+          },          {
             "name": "Content-Type",
             "required": true,
             "sample": "application/json",
@@ -316,41 +321,36 @@
         ],
         "pathParameters": [],
         "urlParameters": [],
-        "requestBody": [
-          {
-            "description": "トークン",
-            "name": "token",
-            "type": "string",
-            "dbTable": "ユーザー",
-            "dbColumn": "トークン",
-            "required": true,
-            "minLength": null,
-            "maxLength": 2048,
-            "format": "",
-            "min": null,
-            "max": null,
-            "note": "JWTリフレッシュトークン"
-          }
-        ],
+        "requestBody": [],
         "description": "リフレッシュトークンを照合して、有効期間内であればアクセストークンを発行し、リフレッシュトークンを更新する。リフレッシュトークンはCookieで返却する。",
         "response": {
           "status": 200,
           "body": [
             {
-              "description": "アクセストークン",
-              "name": "accessToken",
-              "type": "string",
+              "description": "トークン",
+              "name": "token",
+              "type": "object",
               "dbTable": "",
               "dbColumn": "",
-              "note": "JWTアクセストークン"
-            },
-            {
-              "description": "有効期限",
-              "name": "expiresIn",
-              "type": "number",
-              "dbTable": "",
-              "dbColumn": "",
-              "note": "有効期限"
+              "note": "",
+              "children": [
+                {
+                  "description": "アクセストークン",
+                  "name": "accessToken",
+                  "type": "string",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "JWTアクセストークン"
+                },
+                {
+                  "description": "有効期限",
+                  "name": "expiresIn",
+                  "type": "number",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "有効期限"
+                }
+              ]
             }
           ]
         },
