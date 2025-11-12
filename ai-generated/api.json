@@ -26,6 +26,18 @@
       "note": ""
     },
     {
+      "no": 103,
+      "name": "トークンリフレッシュ",
+      "path": "./auth_refresh.md",
+      "endpoint": "/auth/refresh",
+      "resource": "auth",
+      "action": "refresh",
+      "method": "POST",
+      "category": "認証",
+      "authRequired": false,
+      "note": ""
+    },
+    {
       "no": 201,
       "name": "サービス一覧",
       "path": "./user_services_list.md",
@@ -164,23 +176,35 @@
             "note": "ハッシュ化して照合"
           }
         ],
-        "description": "ユーザーID(メールアドレス)とパスワードを照合し、認証可否(可の場合はトークン)を返す。",
+        "description": "ユーザーID(メールアドレス)とパスワードを照合し、可の場合はリフレッシュトークンを登録してアクセストークンを返す。リフレッシュトークンはCookieで返却する。",
         "response": {
           "status": 200,
           "body": [
             {
-              "description": "認証トークン",
+              "description": "トークン",
               "name": "token",
-              "type": "string",
+              "type": "object",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "JWTトークン"
+              "note": "",
+              "children": [
+                {
+                  "description": "アクセストークン",
+                  "name": "accessToken",
+                  "type": "string",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "JWTアクセストークン"
+                },
+                {
+                  "description": "有効期限",
+                  "name": "expiresIn",
+                  "type": "number",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "有効期限"
+                }
+              ]
             },
             {
               "description": "ユーザーID",
@@ -188,12 +212,6 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": ""
             },
             {
@@ -202,12 +220,6 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ユーザー名",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": ""
             }
           ]
@@ -262,7 +274,7 @@
         "pathParameters": [],
         "urlParameters": [],
         "requestBody": [],
-        "description": "リクエストヘッダの認証トークン(JWT)を無効化し、セッションを終了させる。",
+        "description": "リフレッシュトークンを無効化し、セッションを終了させる。",
         "response": {
           "status": 204,
           "body": []
@@ -273,6 +285,87 @@
             "message": "認証情報が無効です",
             "detail": "",
             "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 103,
+        "summary": {
+          "name": "トークンリフレッシュ",
+          "endpoint": "/auth/refresh",
+          "resource": "auth",
+          "action": "refresh",
+          "method": "POST",
+          "category": "認証",
+          "authRequired": false,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "トークン",
+            "name": "token",
+            "type": "string",
+            "dbTable": "ユーザー",
+            "dbColumn": "トークン",
+            "required": true,
+            "minLength": null,
+            "maxLength": 2048,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "JWTリフレッシュトークン"
+          }
+        ],
+        "description": "リフレッシュトークンを照合して、有効期間内であればアクセストークンを発行し、リフレッシュトークンを更新する。リフレッシュトークンはCookieで返却する。",
+        "response": {
+          "status": 200,
+          "body": [
+            {
+              "description": "アクセストークン",
+              "name": "accessToken",
+              "type": "string",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "JWTアクセストークン"
+            },
+            {
+              "description": "有効期限",
+              "name": "expiresIn",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "有効期限"
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "リフレッシュトークンは必須です。",
+            "description": "バリデーションエラー"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証に失敗(ユーザー未登録も含む)"
           },
           {
             "status": 500,
