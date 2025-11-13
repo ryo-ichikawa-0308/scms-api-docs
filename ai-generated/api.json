@@ -1027,7 +1027,7 @@
         "requestBody": [
           {
             "description": "ユーザーID",
-            "name": "userID",
+            "name": "userId",
             "type": "string",
             "dbTable": "ユーザー提供サービス",
             "dbColumn": "ユーザーID",
@@ -1041,7 +1041,7 @@
           },
           {
             "description": "サービスID",
-            "name": "serviceID",
+            "name": "serviceId",
             "type": "string",
             "dbTable": "ユーザー提供サービス",
             "dbColumn": "サービスID",
