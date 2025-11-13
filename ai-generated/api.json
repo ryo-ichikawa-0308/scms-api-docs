@@ -432,14 +432,14 @@
         "requestBody": [
           {
             "description": "サービス名",
-            "name": "ID",
+            "name": "name",
             "type": "string",
             "dbTable": "サービス",
-            "dbColumn": "ID",
+            "dbColumn": "サービス名",
             "required": true,
-            "minLength": 36,
-            "maxLength": 36,
-            "format": "UUID",
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
             "min": null,
             "max": null,
             "note": ""
