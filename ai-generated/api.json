@@ -1135,20 +1135,6 @@
         "urlParameters": [],
         "requestBody": [
           {
-            "description": "ユーザーID",
-            "name": "userId",
-            "type": "string",
-            "dbTable": "契約",
-            "dbColumn": "ユーザーID",
-            "required": true,
-            "minLength": 36,
-            "maxLength": 36,
-            "format": "",
-            "min": null,
-            "max": null,
-            "note": "ログイン中のユーザーID"
-          },
-          {
             "description": "サービス名",
             "name": "serviceName",
             "type": "string",
@@ -1586,20 +1572,6 @@
         "pathParameters": [],
         "urlParameters": [],
         "requestBody": [
-          {
-            "description": "ユーザーID",
-            "name": "userId",
-            "type": "string",
-            "dbTable": "契約",
-            "dbColumn": "ユーザーID",
-            "required": true,
-            "minLength": 36,
-            "maxLength": 36,
-            "format": "UUID",
-            "min": null,
-            "max": null,
-            "note": ""
-          },
           {
             "description": "ユーザー提供サービスID",
             "name": "userServiceId",
