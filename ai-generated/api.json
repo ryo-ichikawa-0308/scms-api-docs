@@ -26,6 +26,18 @@
       "note": ""
     },
     {
+      "no": 103,
+      "name": "トークンリフレッシュ",
+      "path": "./auth_refresh.md",
+      "endpoint": "/auth/refresh",
+      "resource": "auth",
+      "action": "refresh",
+      "method": "POST",
+      "category": "認証",
+      "authRequired": false,
+      "note": ""
+    },
+    {
       "no": 201,
       "name": "サービス一覧",
       "path": "./user_services_list.md",
@@ -45,6 +57,30 @@
       "resource": "user-services",
       "action": "detail",
       "method": "GET",
+      "category": "サービス",
+      "authRequired": true,
+      "note": ""
+    },
+    {
+      "no": 203,
+      "name": "サービス登録",
+      "path": "./services_create.md",
+      "endpoint": "/services/",
+      "resource": "services",
+      "action": "create",
+      "method": "POST",
+      "category": "サービス",
+      "authRequired": true,
+      "note": ""
+    },
+    {
+      "no": 204,
+      "name": "ユーザー提供サービス登録",
+      "path": "./user_services_create.md",
+      "endpoint": "/user-services/",
+      "resource": "user-services",
+      "action": "create",
+      "method": "POST",
       "category": "サービス",
       "authRequired": true,
       "note": ""
@@ -98,7 +134,7 @@
       "note": ""
     },
     {
-      "no": "501",
+      "no": 501,
       "name": "ユーザー登録",
       "path": "./users_create.md",
       "endpoint": "/users/",
@@ -164,23 +200,35 @@
             "note": "ハッシュ化して照合"
           }
         ],
-        "description": "ユーザーID(メールアドレス)とパスワードを照合し、認証可否(可の場合はトークン)を返す。",
+        "description": "ユーザーID(メールアドレス)とパスワードを照合し、可の場合はリフレッシュトークンを登録してアクセストークンを返す。リフレッシュトークンはCookieで返却する。",
         "response": {
           "status": 200,
           "body": [
             {
-              "description": "認証トークン",
+              "description": "トークン",
               "name": "token",
-              "type": "string",
+              "type": "object",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "JWTトークン"
+              "note": "",
+              "children": [
+                {
+                  "description": "アクセストークン",
+                  "name": "accessToken",
+                  "type": "string",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "JWTアクセストークン"
+                },
+                {
+                  "description": "有効期限",
+                  "name": "expiresIn",
+                  "type": "number",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "有効期限"
+                }
+              ]
             },
             {
               "description": "ユーザーID",
@@ -188,12 +236,6 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": ""
             },
             {
@@ -202,12 +244,6 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ユーザー名",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": ""
             }
           ]
@@ -262,7 +298,7 @@
         "pathParameters": [],
         "urlParameters": [],
         "requestBody": [],
-        "description": "リクエストヘッダの認証トークン(JWT)を無効化し、セッションを終了させる。",
+        "description": "リフレッシュトークンを無効化し、セッションを終了させる。",
         "response": {
           "status": 204,
           "body": []
@@ -279,6 +315,210 @@
             "message": "システムエラーが発生しました",
             "detail": "",
             "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 103,
+        "summary": {
+          "name": "トークンリフレッシュ",
+          "endpoint": "/auth/refresh",
+          "resource": "auth",
+          "action": "refresh",
+          "method": "POST",
+          "category": "認証",
+          "authRequired": false,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer xxx...",
+            "note": "リフレッシュトークン"
+          },          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [],
+        "description": "リフレッシュトークンを照合して、有効期間内であればアクセストークンを発行し、リフレッシュトークンを更新する。リフレッシュトークンはCookieで返却する。",
+        "response": {
+          "status": 200,
+          "body": [
+            {
+              "description": "トークン",
+              "name": "token",
+              "type": "object",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "",
+              "children": [
+                {
+                  "description": "アクセストークン",
+                  "name": "accessToken",
+                  "type": "string",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "JWTアクセストークン"
+                },
+                {
+                  "description": "有効期限",
+                  "name": "expiresIn",
+                  "type": "number",
+                  "dbTable": "",
+                  "dbColumn": "",
+                  "note": "有効期限"
+                }
+              ]
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "入力内容に誤りがあります",
+            "detail": "リフレッシュトークンは必須です。",
+            "description": "バリデーションエラー"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証に失敗(ユーザー未登録も含む)"
+          },
+          {
+            "status": 500,
+            "message": "システムエラーが発生しました",
+            "detail": "",
+            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "no": 203,
+        "summary": {
+          "name": "サービス登録",
+          "endpoint": "/services/",
+          "resource": "services",
+          "action": "create",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "サービス名",
+            "name": "name",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "サービス名",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "概要",
+            "name": "description",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "description",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "単価",
+            "name": "price",
+            "type": "number",
+            "dbTable": "サービス",
+            "dbColumn": "price",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": 999999,
+            "note": ""
+          },
+          {
+            "description": "単位",
+            "name": "unit",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "unit",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 16,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "description": "サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 201,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "ID",
+              "note": ""
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 409,
+            "message": "このサービスは登録できません",
+            "detail": "",
+            "description": "同名のサービスが登録済みの場合"
           }
         ]
       }
@@ -585,6 +825,12 @@
             "required": true,
             "sample": "Bearer eyJ...",
             "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
           }
         ],
         "pathParameters": [
@@ -747,6 +993,113 @@
             "message": "システムエラーが発生しました",
             "detail": "",
             "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 204,
+        "summary": {
+          "name": "ユーザー提供サービス登録",
+          "endpoint": "/user-services/",
+          "resource": "user-services",
+          "action": "create",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "ユーザーID",
+            "name": "userId",
+            "type": "string",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "ユーザーID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "サービスID",
+            "name": "serviceId",
+            "type": "string",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "サービスID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "在庫数",
+            "name": "stock",
+            "type": "number",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "在庫数",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": 999999,
+            "note": ""
+          }
+        ],
+        "description": "ユーザー提供サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 201,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "ID",
+              "note": ""
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 409,
+            "message": "このサービスは登録できません",
+            "detail": "",
+            "description": "ユーザーとサービスの組み合わせが登録済みの場合"
           }
         ]
       }
