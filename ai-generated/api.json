@@ -62,6 +62,30 @@
       "note": ""
     },
     {
+      "no": 203,
+      "name": "サービス登録",
+      "path": "./services_create.md",
+      "endpoint": "/services/",
+      "resource": "services",
+      "action": "create",
+      "method": "POST",
+      "category": "サービス",
+      "authRequired": true,
+      "note": ""
+    },
+    {
+      "no": 204,
+      "name": "ユーザー提供サービス登録",
+      "path": "./user_services_create.md",
+      "endpoint": "/user-services/",
+      "resource": "user-services",
+      "action": "create",
+      "method": "POST",
+      "category": "サービス",
+      "authRequired": true,
+      "note": ""
+    },
+    {
       "no": 301,
       "name": "契約一覧",
       "path": "./contracts_list.md",
@@ -110,7 +134,7 @@
       "note": ""
     },
     {
-      "no": "501",
+      "no": 501,
       "name": "ユーザー登録",
       "path": "./users_create.md",
       "endpoint": "/users/",
@@ -372,6 +396,129 @@
             "message": "システムエラーが発生しました",
             "detail": "",
             "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "no": 203,
+        "summary": {
+          "name": "サービス登録",
+          "endpoint": "/services/",
+          "resource": "services",
+          "action": "create",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "サービス名",
+            "name": "ID",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "ID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "概要",
+            "name": "description",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "description",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "単価",
+            "name": "price",
+            "type": "number",
+            "dbTable": "サービス",
+            "dbColumn": "price",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": 999999,
+            "note": ""
+          },
+          {
+            "description": "単位",
+            "name": "unit",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "unit",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 16,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": ""
+          }
+        ],
+        "description": "サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 201,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "ID",
+              "note": ""
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 409,
+            "message": "このサービスは登録できません",
+            "detail": "",
+            "description": "同名のサービスが登録済みの場合"
           }
         ]
       }
@@ -678,6 +825,12 @@
             "required": true,
             "sample": "Bearer eyJ...",
             "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
           }
         ],
         "pathParameters": [
@@ -840,6 +993,113 @@
             "message": "システムエラーが発生しました",
             "detail": "",
             "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+          }
+        ]
+      },
+      {
+        "no": 204,
+        "summary": {
+          "name": "ユーザー提供サービス登録",
+          "endpoint": "/user-services/",
+          "resource": "user-services",
+          "action": "create",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "ユーザーID",
+            "name": "userID",
+            "type": "string",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "ユーザーID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "サービスID",
+            "name": "serviceID",
+            "type": "string",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "サービスID",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": ""
+          },
+          {
+            "description": "在庫数",
+            "name": "stock",
+            "type": "number",
+            "dbTable": "ユーザー提供サービス",
+            "dbColumn": "在庫数",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": 999999,
+            "note": ""
+          }
+        ],
+        "description": "ユーザー提供サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 201,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "ユーザー提供サービス",
+              "dbColumn": "ID",
+              "note": ""
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 409,
+            "message": "このサービスは登録できません",
+            "detail": "",
+            "description": "ユーザーとサービスの組み合わせが登録済みの場合"
           }
         ]
       }
