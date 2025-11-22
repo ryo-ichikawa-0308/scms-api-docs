@@ -2,7 +2,7 @@
   "basePath": "/api/v1",
   "apiList": [
     {
-      "no": 101,
+      "no": "101",
       "name": "ログイン",
       "path": "./auth_login.md",
       "endpoint": "/auth/login",
@@ -14,7 +14,7 @@
       "note": ""
     },
     {
-      "no": 102,
+      "no": "102",
       "name": "ログアウト",
       "path": "./auth_logout.md",
       "endpoint": "/auth/logout",
@@ -26,7 +26,7 @@
       "note": ""
     },
     {
-      "no": 103,
+      "no": "103",
       "name": "トークンリフレッシュ",
       "path": "./auth_refresh.md",
       "endpoint": "/auth/refresh",
@@ -38,7 +38,7 @@
       "note": ""
     },
     {
-      "no": 201,
+      "no": "201",
       "name": "サービス一覧",
       "path": "./user_services_list.md",
       "endpoint": "/user-services/list",
@@ -50,7 +50,7 @@
       "note": ""
     },
     {
-      "no": 202,
+      "no": "202",
       "name": "サービス詳細",
       "path": "./user_services_detail.md",
       "endpoint": "/user-services/{serviceId}",
@@ -62,7 +62,7 @@
       "note": ""
     },
     {
-      "no": 203,
+      "no": "203",
       "name": "サービス登録",
       "path": "./services_create.md",
       "endpoint": "/services/",
@@ -74,7 +74,7 @@
       "note": ""
     },
     {
-      "no": 204,
+      "no": "204",
       "name": "ユーザー提供サービス登録",
       "path": "./user_services_create.md",
       "endpoint": "/user-services/",
@@ -86,7 +86,7 @@
       "note": ""
     },
     {
-      "no": 301,
+      "no": "301",
       "name": "契約一覧",
       "path": "./contracts_list.md",
       "endpoint": "/contracts/list",
@@ -98,7 +98,7 @@
       "note": ""
     },
     {
-      "no": 302,
+      "no": "302",
       "name": "契約詳細",
       "path": "./contracts_detail.md",
       "endpoint": "/contracts/{contractId}",
@@ -110,10 +110,10 @@
       "note": ""
     },
     {
-      "no": 401,
+      "no": "401",
       "name": "サービス契約",
       "path": "./contracts_create.md",
-      "endpoint": "/contracts",
+      "endpoint": "/contracts/",
       "resource": "contracts",
       "action": "create",
       "method": "POST",
@@ -122,7 +122,7 @@
       "note": ""
     },
     {
-      "no": 402,
+      "no": "402",
       "name": "サービス解約",
       "path": "./contracts_cancel.md",
       "endpoint": "/contracts/{contractId}",
@@ -134,7 +134,7 @@
       "note": ""
     },
     {
-      "no": 501,
+      "no": "501",
       "name": "ユーザー登録",
       "path": "./users_create.md",
       "endpoint": "/users/",
@@ -149,7 +149,7 @@
   "apis": {
     "auth": [
       {
-        "no": 101,
+        "no": "101",
         "summary": {
           "name": "ログイン",
           "endpoint": "/auth/login",
@@ -183,7 +183,8 @@
             "format": "メールアドレス",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "パスワード",
@@ -197,7 +198,8 @@
             "format": "",
             "min": null,
             "max": null,
-            "note": "ハッシュ化して照合"
+            "note": "ハッシュ化して照合",
+            "children": []
           }
         ],
         "description": "ユーザーID(メールアドレス)とパスワードを照合し、可の場合はリフレッシュトークンを登録してアクセストークンを返す。リフレッシュトークンはCookieで返却する。",
@@ -218,7 +220,8 @@
                   "type": "string",
                   "dbTable": "",
                   "dbColumn": "",
-                  "note": "JWTアクセストークン"
+                  "note": "JWTアクセストークン",
+                  "children": []
                 },
                 {
                   "description": "有効期限",
@@ -226,7 +229,8 @@
                   "type": "number",
                   "dbTable": "",
                   "dbColumn": "",
-                  "note": "有効期限"
+                  "note": "有効期限",
+                  "children": []
                 }
               ]
             },
@@ -236,7 +240,8 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ID",
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "ユーザー名",
@@ -244,7 +249,8 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ユーザー名",
-              "note": ""
+              "note": "",
+              "children": []
             }
           ]
         },
@@ -270,7 +276,7 @@
         ]
       },
       {
-        "no": 102,
+        "no": "102",
         "summary": {
           "name": "ログアウト",
           "endpoint": "/auth/logout",
@@ -319,7 +325,7 @@
         ]
       },
       {
-        "no": 103,
+        "no": "103",
         "summary": {
           "name": "トークンリフレッシュ",
           "endpoint": "/auth/refresh",
@@ -336,7 +342,8 @@
             "required": true,
             "sample": "Bearer xxx...",
             "note": "リフレッシュトークン"
-          },          {
+          },
+          {
             "name": "Content-Type",
             "required": true,
             "sample": "application/json",
@@ -364,7 +371,8 @@
                   "type": "string",
                   "dbTable": "",
                   "dbColumn": "",
-                  "note": "JWTアクセストークン"
+                  "note": "JWTアクセストークン",
+                  "children": []
                 },
                 {
                   "description": "有効期限",
@@ -372,7 +380,8 @@
                   "type": "number",
                   "dbTable": "",
                   "dbColumn": "",
-                  "note": "有効期限"
+                  "note": "有効期限",
+                  "children": []
                 }
               ]
             }
@@ -400,132 +409,9 @@
         ]
       }
     ],
-    "services": [
-      {
-        "no": 203,
-        "summary": {
-          "name": "サービス登録",
-          "endpoint": "/services/",
-          "resource": "services",
-          "action": "create",
-          "method": "POST",
-          "category": "サービス",
-          "authRequired": true,
-          "dataType": "JSON"
-        },
-        "requestHeader": [
-          {
-            "name": "Authorization",
-            "required": true,
-            "sample": "Bearer eyJ...",
-            "note": "認証トークン"
-          },
-          {
-            "name": "Content-Type",
-            "required": true,
-            "sample": "application/json",
-            "note": ""
-          }
-        ],
-        "pathParameters": [],
-        "urlParameters": [],
-        "requestBody": [
-          {
-            "description": "サービス名",
-            "name": "name",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "サービス名",
-            "required": true,
-            "minLength": 1,
-            "maxLength": 256,
-            "format": "",
-            "min": null,
-            "max": null,
-            "note": ""
-          },
-          {
-            "description": "概要",
-            "name": "description",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "description",
-            "required": true,
-            "minLength": 1,
-            "maxLength": 256,
-            "format": "",
-            "min": null,
-            "max": null,
-            "note": ""
-          },
-          {
-            "description": "単価",
-            "name": "price",
-            "type": "number",
-            "dbTable": "サービス",
-            "dbColumn": "price",
-            "required": true,
-            "minLength": null,
-            "maxLength": null,
-            "format": "",
-            "min": 0,
-            "max": 999999,
-            "note": ""
-          },
-          {
-            "description": "単位",
-            "name": "unit",
-            "type": "string",
-            "dbTable": "サービス",
-            "dbColumn": "unit",
-            "required": true,
-            "minLength": 1,
-            "maxLength": 16,
-            "format": "",
-            "min": null,
-            "max": null,
-            "note": ""
-          }
-        ],
-        "description": "サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
-        "response": {
-          "status": 201,
-          "body": [
-            {
-              "description": "ID",
-              "name": "id",
-              "type": "string",
-              "dbTable": "サービス",
-              "dbColumn": "ID",
-              "note": ""
-            }
-          ]
-        },
-        "errors": [
-          {
-            "status": 400,
-            "message": "パラメーターが不正です",
-            "detail": "サービスIDの形式が不正です",
-            "description": "パスパラメーター(サービスID)の形式が不正な場合"
-          },
-          {
-            "status": 401,
-            "message": "認証情報が無効です",
-            "detail": "",
-            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
-          },
-          {
-            "status": 409,
-            "message": "このサービスは登録できません",
-            "detail": "",
-            "description": "同名のサービスが登録済みの場合"
-          }
-        ]
-      }
-    ],
     "user-services": [
       {
-        "no": 201,
+        "no": "201",
         "summary": {
           "name": "サービス一覧",
           "endpoint": "/user-services/list",
@@ -565,7 +451,8 @@
             "format": "",
             "min": null,
             "max": null,
-            "note": "部分一致検索"
+            "note": "部分一致検索",
+            "children": []
           },
           {
             "description": "取得件数",
@@ -576,10 +463,11 @@
             "required": true,
             "minLength": null,
             "maxLength": null,
-            "format": "",
+            "format": "整数",
             "min": 1,
             "max": 100,
-            "note": ""
+            "note": "ページングの1ページあたりの件数",
+            "children": []
           },
           {
             "description": "オフセット",
@@ -590,13 +478,14 @@
             "required": true,
             "minLength": null,
             "maxLength": null,
-            "format": "",
+            "format": "整数",
             "min": 0,
             "max": null,
-            "note": ""
+            "note": "取得開始位置(0から開始)",
+            "children": []
           }
         ],
-        "description": "リクエストボディの検索条件に基づき、ユーザーが利用可能なサービスの一覧を取得し返却する。",
+        "description": "リクエストボディの検索条件に基づき、サービスの一覧と総件数を返す。認証トークンにより、アクセス権限を確認する。",
         "response": {
           "status": 200,
           "body": [
@@ -606,41 +495,8 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "検索条件に一致する全件数"
-            },
-            {
-              "description": "総ページ数",
-              "name": "totalPages",
-              "type": "number",
-              "dbTable": "",
-              "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "totalCountとlimitから計算される総ページ数"
-            },
-            {
-              "description": "現在ページ",
-              "name": "currentPage",
-              "type": "number",
-              "dbTable": "",
-              "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "offsetとlimitから計算される現在のページ番号"
+              "note": "検索条件に合致したレコードの総件数",
+              "children": []
             },
             {
               "description": "取得件数",
@@ -648,13 +504,8 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": 1,
-              "max": 100,
-              "note": "リクエストパラメータから踏襲"
+              "note": "リクエストで指定された1ページあたりの件数",
+              "children": []
             },
             {
               "description": "オフセット",
@@ -662,13 +513,26 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": 0,
-              "max": null,
-              "note": "リクエストパラメータから踏襲"
+              "note": "リクエストで指定された取得開始位置",
+              "children": []
+            },
+            {
+              "description": "総ページ数",
+              "name": "totalPages",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "totalCountとlimitから計算される総ページ数",
+              "children": []
+            },
+            {
+              "description": "現在ページ",
+              "name": "currentPage",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "offsetとlimitから計算される現在のページ番号",
+              "children": []
             },
             {
               "description": "サービスリスト",
@@ -676,12 +540,6 @@
               "type": "array",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": "取得件数に応じたサービス情報配列",
               "children": [
                 {
@@ -690,27 +548,17 @@
                   "type": "string",
                   "dbTable": "ユーザー提供サービス",
                   "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
-                  "description": "ユーザーID",
-                  "name": "usersId",
+                  "description": "ユーザー名",
+                  "name": "usersName",
                   "type": "string",
                   "dbTable": "ユーザー",
-                  "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "dbColumn": "ユーザー名",
+                  "note": "サービスを提供しているユーザー",
+                  "children": []
                 },
                 {
                   "description": "サービスID",
@@ -718,13 +566,8 @@
                   "type": "string",
                   "dbTable": "サービス",
                   "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "サービス名",
@@ -732,13 +575,8 @@
                   "type": "string",
                   "dbTable": "サービス",
                   "dbColumn": "サービス名",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "概要",
@@ -746,13 +584,8 @@
                   "type": "string",
                   "dbTable": "サービス",
                   "dbColumn": "概要",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "単価",
@@ -760,13 +593,8 @@
                   "type": "number",
                   "dbTable": "サービス",
                   "dbColumn": "単価",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "単位",
@@ -774,13 +602,8 @@
                   "type": "string",
                   "dbTable": "サービス",
                   "dbColumn": "単位",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 }
               ]
             }
@@ -808,7 +631,7 @@
         ]
       },
       {
-        "no": 202,
+        "no": "202",
         "summary": {
           "name": "サービス詳細",
           "endpoint": "/user-services/{serviceId}",
@@ -836,7 +659,7 @@
         "pathParameters": [
           {
             "description": "ユーザー提供サービスID",
-            "name": "id",
+            "name": "ID",
             "type": "string",
             "dbTable": "ユーザー提供サービス",
             "dbColumn": "ID",
@@ -861,27 +684,17 @@
               "type": "string",
               "dbTable": "ユーザー提供サービス",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
-              "description": "ユーザーID",
-              "name": "usersId",
+              "description": "ユーザー名",
+              "name": "usersName",
               "type": "string",
               "dbTable": "ユーザー",
-              "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "dbColumn": "ユーザー名",
+              "note": "サービスを提供しているユーザー",
+              "children": []
             },
             {
               "description": "サービスID",
@@ -889,13 +702,8 @@
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "サービス名",
@@ -903,13 +711,8 @@
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "サービス名",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "概要",
@@ -917,13 +720,8 @@
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "概要",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "単価",
@@ -931,13 +729,8 @@
               "type": "number",
               "dbTable": "サービス",
               "dbColumn": "単価",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "在庫数",
@@ -945,13 +738,8 @@
               "type": "number",
               "dbTable": "ユーザー提供サービス",
               "dbColumn": "在庫",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "単位",
@@ -959,13 +747,8 @@
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "単位",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             }
           ]
         },
@@ -980,24 +763,18 @@
             "status": 401,
             "message": "認証情報が無効です",
             "detail": "",
-            "description": "トークンが無効、未設定"
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
           },
           {
             "status": 404,
-            "message": "該当データが見つかりません",
+            "message": "該当するサービスが見つかりません",
             "detail": "",
-            "description": "指定したサービスIDが存在しない場合"
-          },
-          {
-            "status": 500,
-            "message": "システムエラーが発生しました",
-            "detail": "",
-            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+            "description": "指定されたサービスIDのデータが存在しない場合"
           }
         ]
       },
       {
-        "no": 204,
+        "no": "204",
         "summary": {
           "name": "ユーザー提供サービス登録",
           "endpoint": "/user-services/",
@@ -1037,7 +814,8 @@
             "format": "UUID",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "サービスID",
@@ -1051,7 +829,8 @@
             "format": "UUID",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "在庫数",
@@ -1065,7 +844,8 @@
             "format": "",
             "min": 0,
             "max": 999999,
-            "note": ""
+            "note": "",
+            "children": []
           }
         ],
         "description": "ユーザー提供サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
@@ -1078,7 +858,8 @@
               "type": "string",
               "dbTable": "ユーザー提供サービス",
               "dbColumn": "ID",
-              "note": ""
+              "note": "",
+              "children": []
             }
           ]
         },
@@ -1104,9 +885,137 @@
         ]
       }
     ],
+    "services": [
+      {
+        "no": "203",
+        "summary": {
+          "name": "サービス登録",
+          "endpoint": "/services/",
+          "resource": "services",
+          "action": "create",
+          "method": "POST",
+          "category": "サービス",
+          "authRequired": true,
+          "dataType": "JSON"
+        },
+        "requestHeader": [
+          {
+            "name": "Authorization",
+            "required": true,
+            "sample": "Bearer eyJ...",
+            "note": "認証トークン"
+          },
+          {
+            "name": "Content-Type",
+            "required": true,
+            "sample": "application/json",
+            "note": ""
+          }
+        ],
+        "pathParameters": [],
+        "urlParameters": [],
+        "requestBody": [
+          {
+            "description": "サービス名",
+            "name": "name",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "サービス名",
+            "required": true,
+            "minLength": 36,
+            "maxLength": 36,
+            "format": "UUID",
+            "min": null,
+            "max": null,
+            "note": "",
+            "children": []
+          },
+          {
+            "description": "概要",
+            "name": "description",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "概要",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 256,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "",
+            "children": []
+          },
+          {
+            "description": "単価",
+            "name": "price",
+            "type": "number",
+            "dbTable": "サービス",
+            "dbColumn": "単価",
+            "required": true,
+            "minLength": null,
+            "maxLength": null,
+            "format": "",
+            "min": 0,
+            "max": 999999,
+            "note": "",
+            "children": []
+          },
+          {
+            "description": "単位",
+            "name": "unit",
+            "type": "string",
+            "dbTable": "サービス",
+            "dbColumn": "単位",
+            "required": true,
+            "minLength": 1,
+            "maxLength": 16,
+            "format": "",
+            "min": null,
+            "max": null,
+            "note": "",
+            "children": []
+          }
+        ],
+        "description": "サービスのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
+        "response": {
+          "status": 201,
+          "body": [
+            {
+              "description": "ID",
+              "name": "id",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "ID",
+              "note": "",
+              "children": []
+            }
+          ]
+        },
+        "errors": [
+          {
+            "status": 400,
+            "message": "パラメーターが不正です",
+            "detail": "サービスIDの形式が不正です",
+            "description": "パスパラメーター(サービスID)の形式が不正な場合"
+          },
+          {
+            "status": 401,
+            "message": "認証情報が無効です",
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
+          },
+          {
+            "status": 409,
+            "message": "このサービスは登録できません",
+            "detail": "",
+            "description": "同名のサービスが登録済みの場合"
+          }
+        ]
+      }
+    ],
     "contracts": [
       {
-        "no": 301,
+        "no": "301",
         "summary": {
           "name": "契約一覧",
           "endpoint": "/contracts/list",
@@ -1142,11 +1051,12 @@
             "dbColumn": "サービス名",
             "required": false,
             "minLength": null,
-            "maxLength": 100,
+            "maxLength": 256,
             "format": "",
             "min": null,
             "max": null,
-            "note": "部分一致検索"
+            "note": "",
+            "children": []
           },
           {
             "description": "取得件数",
@@ -1157,10 +1067,11 @@
             "required": true,
             "minLength": null,
             "maxLength": null,
-            "format": "",
+            "format": "整数",
             "min": 1,
             "max": 100,
-            "note": ""
+            "note": "ページングの1ページあたりの件数",
+            "children": []
           },
           {
             "description": "オフセット",
@@ -1171,13 +1082,14 @@
             "required": true,
             "minLength": null,
             "maxLength": null,
-            "format": "",
+            "format": "整数",
             "min": 0,
             "max": null,
-            "note": ""
+            "note": "取得開始位置(0から開始)",
+            "children": []
           }
         ],
-        "description": "リクエストボディの検索条件に基づき、ユーザーの契約の一覧を取得し返却する。",
+        "description": "ログイン中のユーザーが契約している、契約の一覧と総件数を返す。認証トークンにより、アクセス権限を確認する。",
         "response": {
           "status": 200,
           "body": [
@@ -1187,41 +1099,8 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "検索条件に一致する全件数"
-            },
-            {
-              "description": "総ページ数",
-              "name": "totalPages",
-              "type": "number",
-              "dbTable": "",
-              "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "totalCountとlimitから計算される総ページ数"
-            },
-            {
-              "description": "現在ページ",
-              "name": "currentPage",
-              "type": "number",
-              "dbTable": "",
-              "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "offsetとlimitから計算される現在のページ番号"
+              "note": "検索条件に合致したレコードの総件数",
+              "children": []
             },
             {
               "description": "取得件数",
@@ -1229,13 +1108,8 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": 1,
-              "max": 100,
-              "note": "リクエストパラメータから踏襲"
+              "note": "リクエストで指定された1ページあたりの件数",
+              "children": []
             },
             {
               "description": "オフセット",
@@ -1243,13 +1117,26 @@
               "type": "number",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": 0,
-              "max": null,
-              "note": "リクエストパラメータから踏襲"
+              "note": "リクエストで指定された取得開始位置",
+              "children": []
+            },
+            {
+              "description": "総ページ数",
+              "name": "totalPages",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "totalCountとlimitから計算される総ページ数",
+              "children": []
+            },
+            {
+              "description": "現在ページ",
+              "name": "currentPage",
+              "type": "number",
+              "dbTable": "",
+              "dbColumn": "",
+              "note": "offsetとlimitから計算される現在のページ番号",
+              "children": []
             },
             {
               "description": "契約リスト",
@@ -1257,12 +1144,6 @@
               "type": "array",
               "dbTable": "",
               "dbColumn": "",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
               "note": "取得件数に応じた契約情報配列",
               "children": [
                 {
@@ -1271,27 +1152,17 @@
                   "type": "string",
                   "dbTable": "契約",
                   "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
-                  "description": "ユーザーID",
-                  "name": "usersId",
+                  "description": "ユーザー名",
+                  "name": "usersName",
                   "type": "string",
                   "dbTable": "ユーザー",
-                  "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "dbColumn": "ユーザー名",
+                  "note": "サービスを提供しているユーザー",
+                  "children": []
                 },
                 {
                   "description": "ユーザー提供サービスID",
@@ -1299,13 +1170,8 @@
                   "type": "string",
                   "dbTable": "ユーザー提供サービス",
                   "dbColumn": "ID",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "サービス名",
@@ -1313,13 +1179,8 @@
                   "type": "string",
                   "dbTable": "サービス",
                   "dbColumn": "サービス名",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "単価",
@@ -1327,13 +1188,8 @@
                   "type": "number",
                   "dbTable": "サービス",
                   "dbColumn": "単価",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 },
                 {
                   "description": "契約数",
@@ -1341,13 +1197,8 @@
                   "type": "number",
                   "dbTable": "契約",
                   "dbColumn": "契約数",
-                  "required": false,
-                  "minLength": null,
-                  "maxLength": null,
-                  "format": "",
-                  "min": null,
-                  "max": null,
-                  "note": ""
+                  "note": "",
+                  "children": []
                 }
               ]
             }
@@ -1375,7 +1226,7 @@
         ]
       },
       {
-        "no": 302,
+        "no": "302",
         "summary": {
           "name": "契約詳細",
           "endpoint": "/contracts/{contractId}",
@@ -1422,27 +1273,17 @@
               "type": "string",
               "dbTable": "契約",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
-              "description": "ユーザーID",
-              "name": "usersId",
+              "description": "ユーザー名",
+              "name": "usersName",
               "type": "string",
               "dbTable": "ユーザー",
-              "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "dbColumn": "ユーザー名",
+              "note": "サービスを提供しているユーザー",
+              "children": []
             },
             {
               "description": "ユーザー提供サービスID",
@@ -1450,13 +1291,8 @@
               "type": "string",
               "dbTable": "ユーザー提供サービス",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "サービス名",
@@ -1464,13 +1300,8 @@
               "type": "string",
               "dbTable": "サービス",
               "dbColumn": "サービス名",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "単価",
@@ -1478,13 +1309,8 @@
               "type": "number",
               "dbTable": "サービス",
               "dbColumn": "単価",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             },
             {
               "description": "契約数",
@@ -1492,13 +1318,8 @@
               "type": "number",
               "dbTable": "契約",
               "dbColumn": "契約数",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "解約画面で取得"
+              "note": "解約画面で取得",
+              "children": []
             },
             {
               "description": "在庫数",
@@ -1506,13 +1327,8 @@
               "type": "number",
               "dbTable": "ユーザー提供サービス",
               "dbColumn": "在庫数",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": "契約画面で取得"
+              "note": "契約画面で取得",
+              "children": []
             }
           ]
         },
@@ -1527,24 +1343,18 @@
             "status": 401,
             "message": "認証情報が無効です",
             "detail": "",
-            "description": "トークンが無効、未設定"
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
           },
           {
             "status": 404,
-            "message": "該当データが見つかりません",
+            "message": "該当する契約が見つかりません",
             "detail": "",
-            "description": "指定した契約IDが存在しない場合"
-          },
-          {
-            "status": 500,
-            "message": "システムエラーが発生しました",
-            "detail": "",
-            "description": "予期せぬサーバー内部エラー(DB接続失敗など)"
+            "description": "指定された契約IDのデータが存在しない場合"
           }
         ]
       },
       {
-        "no": 401,
+        "no": "401",
         "summary": {
           "name": "サービス契約",
           "endpoint": "/contracts",
@@ -1584,7 +1394,8 @@
             "format": "UUID",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "契約数",
@@ -1598,7 +1409,8 @@
             "format": "",
             "min": 1,
             "max": 99,
-            "note": ""
+            "note": "",
+            "children": []
           }
         ],
         "description": "リクエストボディの条件に基づき、契約テーブルのレコードを作成する。認証トークンにより、アクセス権限を確認する。",
@@ -1611,13 +1423,8 @@
               "type": "string",
               "dbTable": "契約",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             }
           ]
         },
@@ -1636,9 +1443,9 @@
           },
           {
             "status": 404,
-            "message": "対象サービスが見つかりません",
-            "detail": "",
-            "description": "指定したユーザー提供サービスIDが存在しない場合"
+            "message": "サービスが存在しません",
+            "detail": "指定されたサービスIDは登録されていません",
+            "description": "指定されたuserServiceIdに対応するデータがない"
           },
           {
             "status": 500,
@@ -1649,7 +1456,7 @@
         ]
       },
       {
-        "no": 402,
+        "no": "402",
         "summary": {
           "name": "サービス解約",
           "endpoint": "/contracts/{contractId}",
@@ -1701,20 +1508,20 @@
           {
             "status": 400,
             "message": "入力内容に誤りがあります",
-            "detail": "-",
+            "detail": "",
             "description": "バリデーションエラー"
           },
           {
             "status": 401,
             "message": "認証情報が無効です",
-            "detail": "-",
-            "description": "トークンが無効、未設定"
+            "detail": "",
+            "description": "認証が必要なAPIでトークンが無効または未送信の場合"
           },
           {
             "status": 404,
-            "message": "対象契約が見つかりません",
-            "detail": "-",
-            "description": "指定した契約IDが存在しない、または解約済みの場合"
+            "message": "サービスが存在しません",
+            "detail": "指定されたサービスIDは登録されていません",
+            "description": "指定されたserviceIdに対応するマスターデータがない"
           },
           {
             "status": 500,
@@ -1761,7 +1568,8 @@
             "format": "",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "メールアドレス",
@@ -1775,7 +1583,8 @@
             "format": "メールアドレス",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           },
           {
             "description": "パスワード",
@@ -1789,7 +1598,8 @@
             "format": "",
             "min": null,
             "max": null,
-            "note": ""
+            "note": "",
+            "children": []
           }
         ],
         "description": "ユーザー情報を登録する。",
@@ -1802,13 +1612,8 @@
               "type": "string",
               "dbTable": "ユーザー",
               "dbColumn": "ID",
-              "required": false,
-              "minLength": null,
-              "maxLength": null,
-              "format": "",
-              "min": null,
-              "max": null,
-              "note": ""
+              "note": "",
+              "children": []
             }
           ]
         },
