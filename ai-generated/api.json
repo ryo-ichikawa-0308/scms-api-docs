@@ -1192,6 +1192,15 @@
                   "children": []
                 },
                 {
+                  "description": "単位",
+                  "name": "unit",
+                  "type": "string",
+                  "dbTable": "サービス",
+                  "dbColumn": "単位",
+                  "note": "",
+                  "children": []
+                },
+                {
                   "description": "契約数",
                   "name": "quantity",
                   "type": "number",
@@ -1309,6 +1318,15 @@
               "type": "number",
               "dbTable": "サービス",
               "dbColumn": "単価",
+              "note": "",
+              "children": []
+            },
+            {
+              "description": "単位",
+              "name": "unit",
+              "type": "string",
+              "dbTable": "サービス",
+              "dbColumn": "単位",
               "note": "",
               "children": []
             },

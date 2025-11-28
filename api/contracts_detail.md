@@ -46,6 +46,7 @@
 | ユーザー提供サービスID | userServicesId | string | ユーザー提供サービス | ID         | -                              |
 | サービス名             | name           | string | サービス             | サービス名 | -                              |
 | 単価                   | price          | number | サービス             | 単価       | -                              |
+| 単位                   | unit           | string | サービス             | 単位       | -                              |
 | 契約数                 | quantity       | number | 契約                 | 契約数     | 解約画面で取得                 |
 | 在庫数                 | stock          | number | ユーザー提供サービス | 在庫数     | 契約画面で取得                 |
 
