@@ -353,7 +353,7 @@
         "pathParameters": [],
         "urlParameters": [],
         "requestBody": [],
-        "description": "リフレッシュトークンを照合して、有効期間内であればアクセストークンを発行し、リフレッシュトークンを更新する。リフレッシュトークンはCookieで返却する。",
+        "description": "Cookieから取得したリフレッシュトークンを照合して、有効期間内であればアクセストークンを発行し、リフレッシュトークンを更新する。リフレッシュトークンはCookieで返却する。",
         "response": {
           "status": 200,
           "body": [
